@@ -5,7 +5,7 @@
 
   margin: 0 auto;
 
-  width: 320px;
+  width: 380px;
   border: 2px solid black;
   padding: 15px 25px;
   border-radius: 7px;
@@ -34,13 +34,23 @@
 }
 
 .submit_btn {
-  padding: 10px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 30px;
+
   border-radius: 5px;
   font-size: 13px;
   text-transform: uppercase;
   cursor: pointer;
+  background: #eeeeee;
 
   &:hover {
-    background: #e2e2e2;
+    background: #e1e1e1;
+  }
+
+  &:disabled {
+    background: #eeeeee;
   }
 }

@@ -1,17 +1,24 @@
 import { useAddContact } from 'hooks/useAddContact';
-import style from './ContactForm.module.scss';
+import { Spinner } from 'components/Spinner/Spinner';
+import styles from './ContactForm.module.scss';
 
 export const ContactForm = () => {
-  const { name, number, handleSubmit, handleChangeInput } = useAddContact();
+  const {
+    name,
+    number,
+    handleSubmit,
+    handleChangeInput,
+    loading = false,
+  } = useAddContact();
 
   return (
-    <form onSubmit={handleSubmit} className={style.form}>
-      <label className={style.label}>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <label className={styles.label}>
         Name
         <input
           type="text"
           name="name"
-          className={style.input}
+          className={styles.input}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
@@ -21,12 +28,12 @@ export const ContactForm = () => {
         />
       </label>
 
-      <label className={style.label}>
+      <label className={styles.label}>
         Number
         <input
           type="tel"
           name="number"
-          className={style.input}
+          className={styles.input}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
@@ -35,8 +42,13 @@ export const ContactForm = () => {
         />
       </label>
 
-      <button type="submit" className={style.submit_btn}>
+      <button
+        type="submit"
+        className={styles.submit_btn}
+        disabled={name === ''}
+      >
         Add contact
+        {loading && <Spinner size={20} />}
       </button>
     </form>
   );

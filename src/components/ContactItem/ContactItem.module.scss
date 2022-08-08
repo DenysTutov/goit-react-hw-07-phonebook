@@ -17,10 +17,14 @@
 
 .delete_btn {
   border-radius: 5px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
   font-size: 12px;
   text-transform: uppercase;
-  padding: 2px 6px;
+
   cursor: pointer;
 
   &:hover {
