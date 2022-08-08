@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as contactsOperation from 'redux/contactsOperation';
 import { Spinner } from '../Spinner/Spinner';
 import style from './ContactItem.module.scss';
-import { isDeleteLoading } from '../../redux/contactsSlice';
 import { useState } from 'react';
 
 const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
 
-  const loading = useSelector(isDeleteLoading);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleDeleteContact = contactId => {
-    // setLoading(true);
+    setLoading(true);
     dispatch(contactsOperation.deleteContact(contactId));
   };
 
