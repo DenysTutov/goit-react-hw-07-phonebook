@@ -10,36 +10,51 @@ const contactsSlice = createSlice({
   initialState: {
     items: [],
     filter: '',
-    loading: { isAdd: false, isDelete: false },
+    loading: false,
     error: null,
   },
+
   reducers: {
     filteredContacts: (state, action) => {
       state.filter = action.payload;
     },
   },
-  extraReducers: {
-    [getContacts.fulfilled]: (state, action) => {
-      state.items = action.payload;
-    },
-    [getContacts.rejected]: (state, action) => {
-      state.error = action.payload;
-    },
 
-    [addContact.fulfilled]: (state, action) => {
-      state.items.push(action.payload);
-      state.loading.isAdd = false;
+  extraReducers: {
+    [getContacts.pending]: state => {
+      state.loading = true;
     },
     [addContact.pending]: state => {
-      state.loading.isAdd = true;
-    },
-
-    [deleteContact.fulfilled]: (state, action) => {
-      state.items = state.items.filter(({ id }) => id !== action.payload);
-      state.loading.isDelete = false;
+      state.loading = true;
     },
     [deleteContact.pending]: state => {
-      state.loading.isDelete = true;
+      state.loading = true;
+    },
+
+    [getContacts.fulfilled]: (state, action) => {
+      state.items = action.payload;
+      state.loading = false;
+    },
+    [addContact.fulfilled]: (state, action) => {
+      state.items.push(action.payload);
+      state.loading = false;
+    },
+    [deleteContact.fulfilled]: (state, action) => {
+      state.items = state.items.filter(({ id }) => id !== action.payload);
+      state.loading = false;
+    },
+
+    [getContacts.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    [addContact.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    [deleteContact.rejected]: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });
@@ -52,5 +67,4 @@ export const { addNewContact, filteredContacts } = contactsSlice.actions;
 // Selectors
 export const getContactsItems = state => state.contacts.items;
 export const getFilterValue = state => state.contacts.filter;
-export const isAddLoading = state => state.contacts.loading.isAdd;
-export const isDeleteLoading = state => state.contacts.loading.isDelete;
+export const isLoading = state => state.contacts.loading;

@@ -3,13 +3,8 @@ import { Spinner } from 'components/Spinner/Spinner';
 import styles from './ContactForm.module.scss';
 
 export const ContactForm = () => {
-  const {
-    name,
-    number,
-    handleSubmit,
-    handleChangeInput,
-    loading = false,
-  } = useAddContact();
+  const { name, number, handleSubmit, handleChangeInput, localLoading } =
+    useAddContact();
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -48,7 +43,7 @@ export const ContactForm = () => {
         disabled={name === ''}
       >
         Add contact
-        {loading && <Spinner size={20} />}
+        {localLoading && <Spinner size={20} />}
       </button>
     </form>
   );
